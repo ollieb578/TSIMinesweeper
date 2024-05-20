@@ -12,6 +12,7 @@ class Grid {
         this.ysize = ysize;
         this.mines = mines;
         this.tiles = []; // this is a 2D array, index as [y][x] for positional coordinates.
+        this.revealMask = []; // this is a 2D array, like tiles. shows which tiles have been revealed, and their values.
     }
 
     // creates a random integer between (and including) values specified
