@@ -1,0 +1,14 @@
+minesweeper
+
+- terminal/cli
+
+- win condition
+
+- flagging
+
+- input validation
+
+- oop-based
+	- tile?
+	- grid?
+	- renderer/game client/input handler
