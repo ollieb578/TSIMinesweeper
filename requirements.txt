@@ -2,13 +2,18 @@ minesweeper
 
 - terminal/cli
 
-- win condition
+- win condition - DONE
 
 - flagging
 
 - input validation
 
 - oop-based
-	- tile?
-	- grid?
+	- tile? - DONE
+	- grid? - DONE?
 	- renderer/game client/input handler
+
+- implementation so far is a little backwards.
+	instead of initializing all the values onto the tiles at the start of the game,
+	or having the values mapped back onto them after the reveal, all of the important
+	values are just held in arrays in the various objects (mainly grid)

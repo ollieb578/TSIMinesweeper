@@ -9,6 +9,8 @@ const prompt = require("prompt-sync")();
 
 // class imports for game
 const Grid = require("./grid");
+const UI = require("./ui");
+
 
 let a = new Grid(10,8,10);
 a.populate();
@@ -20,3 +22,6 @@ a.reveal(1,1);
 a.reveal(2,2);
 
 console.log(a.getRevealMask());
+
+let b = new UI(a);
+b.printGrid();

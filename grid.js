@@ -3,6 +3,7 @@
 
 // grid.js
 // Grid object class.
+// This is the board where the game is played, and as such stores the bulk of the logic.
 
 const Tile = require("./tile");
 
@@ -29,10 +30,11 @@ class Grid {
     populate() {
         let mineX;
         let mineY;
+        let yArray = [];
 
         // create tile array of xs for each y
         for (let y = 0; y < this.ysize; y++) {
-            let yArray = [];
+            yArray = [];
 
             // create tile for each x
             for (let x = 0; x < this.xsize; x++) {
@@ -44,6 +46,8 @@ class Grid {
 
         // populates grid with mines
         for (let i = 0; i < this.mines; i++) {
+            // probably bad practise because in theory it /can/ run forever
+            // statistics says it won't
             do {
                 mineX = this.getRandomIntInclusive(0, this.xsize - 1);
                 mineY = this.getRandomIntInclusive(0, this.ysize - 1);
@@ -54,6 +58,8 @@ class Grid {
     }
 
     // reveals contents of selected tile. checks 3x3 area around tile if it's not a bomb.
+    // returns:
+    // boolean - false if game over, true if not
     // RECURSIVE: calls itself iff the current cell hasn't got a value, and there are no 
     //              mines in its radius.
     reveal(x, y) {
@@ -62,7 +68,7 @@ class Grid {
         let currentY;
 
         if (this.tiles[y][x] == "mine") {
-            return("gameover");
+            return(false);
         } else if (this.revealMask[y][x] == "*") {
             // for all surrounding tiles
             // y modifier
@@ -71,8 +77,10 @@ class Grid {
                 for (let j = -1; j < 2; j++) {
                     currentX = x + j;
                     currentY = y + i;
-
+                    
+                    // if in range of grid
                     if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
+                        //check if mine
                         if (this.tiles[currentY][currentX].getType() == "mine") {
                             minecount += 1;
                         }
@@ -80,6 +88,7 @@ class Grid {
                 }
             }
 
+            // sets the value onto the revealMask to be displayed to user
             this.revealMask[y][x] = minecount;
             
             // if no mines detected in 3x3 radius
@@ -92,6 +101,7 @@ class Grid {
                         currentX = x + j;
                         currentY = y + i;
 
+                        // if in range of grid
                         if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
                             this.reveal(x + j, y + i);
                         }
@@ -99,6 +109,41 @@ class Grid {
                 }
             }
         } 
+
+        return true;
+    }
+
+    // checks for win condition
+    // this is probably inefficient but i couldn't think of a better way to do it
+    checkWin() {
+        let minecount = 0;
+
+        // iterate rows
+        for (let y = 0; y < this.ysize; y++) {
+            // iterate columns
+            for (let x = 0; x < this.xsize; x++) {
+                // check for presence of "*" in grid
+                if (this.revealMask[y][x] == "*") {
+                    minecount += 1;
+                }
+            }
+        }
+
+        if (minecount == this.mines) {
+            return true;
+        }
+
+        return false;
+    }
+
+    // gets ysize attribute
+    getYsize() {
+        return this.ysize;
+    }
+
+    // gets xsize attribute
+    getXsize() {
+        return this.xsize;
     }
 
     // gets tiles array object
@@ -112,4 +157,4 @@ class Grid {
     }
 }
 
-module.exports = Grid
+module.exports = Grid;

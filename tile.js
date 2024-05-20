@@ -22,4 +22,4 @@ class Tile {
     }
 }
 
-module.exports = Tile
+module.exports = Tile;
