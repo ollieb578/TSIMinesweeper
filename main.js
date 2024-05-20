@@ -8,8 +8,9 @@
 const prompt = require("prompt-sync")();
 
 // class imports for game
-const Tile = require("./tile");
+const Grid = require("./grid");
 
-let a = new Tile(type = "Bomb");
+let a = new Grid(2,3,2);
+a.populate();
 
-console.log(a.getType());
+console.log(a.getTiles());

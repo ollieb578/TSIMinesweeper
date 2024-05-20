@@ -3,3 +3,6 @@
 
 // ui.js
 // User interface class. Handles printing of game data to console.
+
+// class imports for game
+const Grid = require("./grid");

@@ -11,7 +11,7 @@ class Grid {
         this.xsize = xsize;
         this.ysize = ysize;
         this.mines = mines;
-        this.tiles = [];
+        this.tiles = []; // this is a 2D array, index as [y][x] for positional coordinates.
     }
 
     // creates a random integer between (and including) values specified
@@ -43,10 +43,10 @@ class Grid {
 
         // populates grid with mines
         for (let i = 0; i < this.mines; i++) {
-            while (mineX.isNaN() || this.tiles[mineY][mineX].getType() == "mine") {
+            do {
                 mineX = this.getRandomIntInclusive(0, this.xsize - 1);
                 mineY = this.getRandomIntInclusive(0, this.ysize - 1);
-            } 
+            } while (this.tiles[mineY][mineX].getType() == "mine");
 
             this.tiles[mineY][mineX].setType("mine");
         }
@@ -55,7 +55,21 @@ class Grid {
     // reveals contents of selected tile. checks 3x3 area around tile if it's not a bomb.
     // RECURSIVE:
     reveal(x, y) {
-        
+        let minecount = 0;
+
+        if (this.tiles[y][x] == "mine") {
+            return("gameover");
+        } else {
+            // for all surrounding tiles
+            // y modifier
+            for (let i = -1; i < 2; i++) {
+                // x modifier
+                for (let j = -1; j < 2; j++) {
+
+                }
+            }
+
+        }
     }
 
     // gets tiles array object
