@@ -10,10 +10,10 @@ const prompt = require("prompt-sync")();
 // class imports for game
 const Grid = require("./grid");
 
-let a = new Grid(4,4,2);
+let a = new Grid(10,8,10);
 a.populate();
 
-console.log(a.getTiles());
+//console.log(a.getTiles());
 console.log(a.getRevealMask());
 
 a.reveal(1,1);

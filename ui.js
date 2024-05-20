@@ -6,3 +6,7 @@
 
 // class imports for game
 const Grid = require("./grid");
+
+class Ui {
+    
+}
