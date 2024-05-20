@@ -12,7 +12,7 @@ class Grid {
         this.ysize = ysize;
         this.mines = mines;
         this.tiles = []; // this is a 2D array, index as [y][x] for positional coordinates.
-        this.revealMask = []; // this is a 2D array, like tiles. shows which tiles have been revealed, and their values.
+        this.revealMask = new Array(ysize).fill("*").map(() => new Array(xsize).fill("*")); // this is a 2D array, like tiles. shows which tiles have been revealed, and their values.
     }
 
     // creates a random integer between (and including) values specified
@@ -54,28 +54,61 @@ class Grid {
     }
 
     // reveals contents of selected tile. checks 3x3 area around tile if it's not a bomb.
-    // RECURSIVE:
+    // RECURSIVE: calls itself iff the current cell hasn't got a value, and there are no 
+    //              mines in its radius.
     reveal(x, y) {
         let minecount = 0;
+        let currentX;
+        let currentY;
 
         if (this.tiles[y][x] == "mine") {
             return("gameover");
-        } else {
+        } else if (this.revealMask[y][x] == "*") {
             // for all surrounding tiles
             // y modifier
             for (let i = -1; i < 2; i++) {
                 // x modifier
                 for (let j = -1; j < 2; j++) {
+                    currentX = x + j;
+                    currentY = y + i;
 
+                    if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
+                        if (this.tiles[currentY][currentX].getType() == "mine") {
+                            minecount += 1;
+                        }
+                    }
                 }
             }
 
-        }
+            this.revealMask[y][x] = minecount;
+            
+            // if no mines detected in 3x3 radius
+            if (minecount == 0) {
+                // for all surrounding tiles
+                // y modifier
+                for (let i = -1; i < 2; i++) {
+                    // x modifier
+                    for (let j = -1; j < 2; j++) {
+                        currentX = x + j;
+                        currentY = y + i;
+
+                        if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
+                            this.reveal(x + j, y + i);
+                        }
+                    }
+                }
+            }
+        } 
     }
 
     // gets tiles array object
     getTiles() {
         return this.tiles;
+    }
+
+    // gets tiles array object
+    getRevealMask() {
+        return this.revealMask;
     }
 }
 
