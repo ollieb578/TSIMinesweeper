@@ -78,7 +78,7 @@ class Ui {
 
             for (let x in displayGrid[y]) {
                 if(displayGrid[y][x].getType() == "mine") {
-                    process.stdout.write("  M");
+                    process.stdout.write("  M".red);
                 } else {
                     process.stdout.write("  _");
                 }
@@ -141,13 +141,13 @@ class Ui {
     flagInput() {
         let text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
         let input = prompt(text).toUpperCase();
-        let coords = input.split(" ");
-
+        
         while (!this.validateInput(input)){
             input = prompt(text).toUpperCase();
             console.log("Input not valid. Please try again")
         }
 
+        let coords = input.split(" ");
         let xval = alpha.indexOf(coords[0]);
         let yval = coords[1];
 

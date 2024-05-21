@@ -4,16 +4,16 @@ minesweeper
 
 - win condition - DONE
 
-- flagging
+- flagging - DONEa
 
-- input validation
+- input validation - DONE
 
 - oop-based
 	- tile? - DONE
-	- grid? - DONE?
-	- renderer/game client/input handler
+	- grid? - DONE
+	- renderer/game client/input handler - DONE UI class
 
-- implementation so far is a little backwards.
+- implementation so far is a little backwards. - worked in the end
 	instead of initializing all the values onto the tiles at the start of the game,
 	or having the values mapped back onto them after the reveal, all of the important
 	values are just held in arrays in the various objects (mainly grid)

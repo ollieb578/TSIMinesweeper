@@ -33,20 +33,26 @@ class Game {
     // initializes grid and ui
     // returns true if game won, false if lost
     play(){
+        const start = Date.now();
+
         this.grid.populate();
 
         while (!this.gameOver) {
             this.ui.printGrid();
 
             if (!this.ui.userInput()){
-                console.log("================ GAME OVER ! ================");
                 this.ui.printFullGrid();
+                console.log("\n\n================ GAME OVER ! ================");
                 this.gameOver = true;
             }
 
             if (this.grid.checkWin()){
-                console.log("================  YOU WIN !  ================");
                 this.ui.printFullGrid();
+                console.log("\n\n================  YOU WIN !  ================");
+
+                const elapsed = (Date.now() - start)/1000;
+                console.log("Seconds Elapsed: " + elapsed);
+                
                 this.gameOver = true;
 
                 return true;

@@ -30,14 +30,14 @@ function main() {
 
     let userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
 
-    if (userChoice != "n") {
+    while (userChoice != "n") {
         let game = new Game(chooseDifficulty());
 
         if (game.play()){
             wins += 1;
         }
-        
-        main();
+
+        userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
     }
     
     console.log("Exiting...")
