@@ -43,7 +43,7 @@ function main() {
             leaderboard.printLeaderboard(difficulty);
         }
 
-        userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
+        userChoice = prompt("\nStart new game? [*Y]es or [N]o: ").toLowerCase();
     }
     
     console.log("Exiting...")
