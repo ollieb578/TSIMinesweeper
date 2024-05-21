@@ -28,15 +28,29 @@ class Leaderboard {
 
     // print for all leaderboard entries of a given difficulty
     printLeaderboard(difficulty) {
+        let textDifficulty;
+
+        switch (difficulty) {
+            case 1:
+                textDifficulty = "easy";
+                break;
+            case 2:
+                textDifficulty = "medium";
+                break;
+            case 3:
+                textDifficulty = "hard";
+                break;
+        }
+
         const data = this.readLeaderboard().leaderboard;
-        const entries = data.filter(function(data) { return data.Difficulty == difficulty; })[0].Entries;
+        const entries = data.filter(function(data) { return data.Difficulty == textDifficulty; })[0].Entries;
 
         console.log("================ LEADERBOARD ================");
 
-        if (difficulty == "medium") {
+        if (textDifficulty == "medium") {
             console.log("============= Difficulty: medium ============");
         } else {
-            console.log("============== Difficulty: " + difficulty + " =============");
+            console.log("============== Difficulty: " + textDifficulty + " =============");
         }
 
         for (let entry in entries) {
