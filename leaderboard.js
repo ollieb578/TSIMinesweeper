@@ -46,8 +46,8 @@ class Leaderboard {
 
     // adds a new entry to the leaderboard.
     newEntry(difficulty, time) {
-        const data = this.readLeaderboard().leaderboard;
-        const entries = data.filter(function(data) { return data.Difficulty == difficulty; })[0].Entries;
+        const data = this.readLeaderboard();
+        const entries = data.leaderboard.filter(function(data) { return data.Difficulty == difficulty; })[0].Entries;
 
         let name = "a";
 
