@@ -26,7 +26,7 @@ function chooseDifficulty() {
 function main() {
     let wins = 0;
 
-    console.log("\nWelcome to: \n     M I N E S W E E P E R");
+    console.log("\n\nWelcome to: \n     M I N E S W E E P E R");
 
     let userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
 

@@ -4,12 +4,10 @@
 // game.js
 // Runs all core game logic. Initializes board, and handles UI functions. Called by main.js only.
 
-// TODO: implement difficulty settings somehow.
-//
 // easy:     8x10 board, 10 mines
 // medium:  14x18 board, 40 mines
 // hard:    20x24 board, 99 mines
-// 
+
 // can't support boards larger than 00x26, need to work on UI class
 
 // class imports for game
