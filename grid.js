@@ -59,24 +59,24 @@ class Grid {
 
     // reveals contents of selected tile. checks 3x3 area around tile if it's not a bomb.
     // returns:
-    // boolean - false if game over, true if not
+    // string - "gameover" if mine guessed
     // RECURSIVE: calls itself iff the current cell hasn't got a value, and there are no 
     //              mines in its radius.
     reveal(x, y) {
         let minecount = 0;
         let currentX;
         let currentY;
-
-        if (this.tiles[y][x] == "mine") {
-            return(false);
+        
+        if (this.tiles[y][x].getType() == "mine") {
+            return("gameover");
         } else if (this.revealMask[y][x] == "*") {
             // for all surrounding tiles
             // y modifier
             for (let i = -1; i < 2; i++) {
                 // x modifier
                 for (let j = -1; j < 2; j++) {
-                    currentX = x + j;
-                    currentY = y + i;
+                    currentX = Number(x) + j;
+                    currentY = Number(y) + i;
                     
                     // if in range of grid
                     if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
@@ -98,19 +98,19 @@ class Grid {
                 for (let i = -1; i < 2; i++) {
                     // x modifier
                     for (let j = -1; j < 2; j++) {
-                        currentX = x + j;
-                        currentY = y + i;
+                        currentX = Number(x) + j;
+                        currentY = Number(y) + i;
 
                         // if in range of grid
-                        if (currentY >= 0 && currentY < this.ysize && currentX >= 0 && currentX < this.xsize) {
-                            this.reveal(x + j, y + i);
+                        if (currentY >= 0 && currentY < this.ysize 
+                            && currentX >= 0 
+                            && currentX < this.xsize) {
+                            this.reveal(currentX, currentY);
                         }
                     }
                 }
             }
-        } 
-
-        return true;
+        }
     }
 
     // checks for win condition

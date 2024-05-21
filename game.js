@@ -19,10 +19,10 @@ const UI = require("./ui");
 class Game {
     constructor(difficulty) {
         // difficulty picker
-        if (difficulty == "hard") {
-            this.grid = new Grid(20, 24, 99);
-        } else if (difficulty == "medium") {
-            this.grid = new Grid(14, 18, 40);
+        if (difficulty == 3) {
+            this.grid = new Grid(24, 20, 99);
+        } else if (difficulty == 2) {
+            this.grid = new Grid(18, 14, 40);
         } else {
             this.grid = new Grid(10, 8, 10);
         }
@@ -36,7 +36,6 @@ class Game {
     // returns true if game won, false if lost
     play(){
         this.grid.populate();
-        this.ui.printGrid();
 
         while (!this.gameOver) {
             this.ui.printGrid();
@@ -47,7 +46,13 @@ class Game {
                 this.gameOver = true;
             }
 
+            if (this.grid.checkWin()){
+                console.log("================  YOU WIN !  ================");
+                this.ui.printFullGrid();
+                this.gameOver = true;
 
+                return true;
+            }
         }
 
         return false;

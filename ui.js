@@ -26,7 +26,7 @@ class Ui {
 
         console.log("\n\nMINESWEEPER\n");
 
-        process.stdout.write("   ");
+        process.stdout.write("    ");
 
         // print alphabetical labels along the top
         for (let x in displayGrid[0]) {
@@ -35,7 +35,12 @@ class Ui {
         
         // print rows, and row labels
         for (let y in displayGrid) {
-            process.stdout.write("\n" + y);
+            if (y < 10) {
+                process.stdout.write("\n " + y);
+            } else {
+                process.stdout.write("\n" + y);
+            }
+            
 
             for (let x in displayGrid[y]) {
                 if (this.flagMask[y][x] != "F") {
@@ -79,6 +84,7 @@ class Ui {
     // returns true if the game isn't over, false if the user has tripped a mine
     // probably a bit dodgy, shouldn't be mixing UI functionality and game logic like this
     userInput() {
+        console.log("\n");
         let input = prompt("Place [F]lag or [*G]uess a tile?").toLowerCase();
 
         if (input == "f") {
@@ -94,7 +100,7 @@ class Ui {
         let coords = input.split(" ");
 
         if (coords.length == 2 
-            && coords[0] in alpha.slice(0, this.grid.xsize - 1)
+            && alpha.slice(0, this.grid.xsize).includes(coords[0])
             && coords[1] >= 0 
             && coords[1] < this.grid.ysize
         ) {
@@ -108,34 +114,43 @@ class Ui {
     // returns true if the game isn't over, false if the user has tripped a mine
     guessInput() {
         let input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
-        let coords = input.split(" ");
-
         while (!this.validateInput(input)){
+            console.log("Input not valid. Please try again");
             input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
-            console.log("Input not valid. Please try again")
         }
 
+        let coords = input.split(" ");
         let xval = alpha.indexOf(coords[0]);
         let yval = coords[1];
 
-        return(this.grid.reveal(xval, yval));
+        if (this.grid.reveal(xval, yval) != "gameover") {
+            return true;
+        } else {
+            return false;
+        }
     }   
 
     // takes user guesses as input in the form "x00" where "x" is the column label and "00" is the row number
     // returns true
     flagInput() {
-        let input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
+        let text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
+        let input = prompt(text).toUpperCase();
         let coords = input.split(" ");
 
         while (!this.validateInput(input)){
-            input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
+            input = prompt(text).toUpperCase();
             console.log("Input not valid. Please try again")
         }
 
         let xval = alpha.indexOf(coords[0]);
         let yval = coords[1];
 
-        this.flagMask[yval][xval] = "F";
+        if (this.flagMask[yval][xval] != "F") {
+            this.flagMask[yval][xval] = "F";
+        } else {
+            this.flagMask[yval][xval] = "*";
+        }
+        
         return true;
     }
 }
