@@ -17,3 +17,7 @@ minesweeper
 	instead of initializing all the values onto the tiles at the start of the game,
 	or having the values mapped back onto them after the reveal, all of the important
 	values are just held in arrays in the various objects (mainly grid)
+
+- think about storing user stats in a file, have a stats screen accessible from the main menu
+
+- add a timer

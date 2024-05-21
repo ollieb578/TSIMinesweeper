@@ -151,7 +151,7 @@ class Grid {
         return this.tiles;
     }
 
-    // gets tiles array object
+    // gets mask array object
     getRevealMask() {
         return this.revealMask;
     }
