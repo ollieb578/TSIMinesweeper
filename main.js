@@ -49,7 +49,4 @@ function main() {
     console.log("Exiting...")
 }
 
-let leaderboard = new Leaderboard();
-leaderboard.newEntry("easy", 216)
-
 main();
