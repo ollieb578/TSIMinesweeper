@@ -6,6 +6,7 @@
 
 // external imports
 const prompt = require("prompt-sync")();
+const colors = require("colors");
 
 // class imports for game
 const Grid = require("./grid");
@@ -13,10 +14,6 @@ const Grid = require("./grid");
 // global vars
 // alphabet array for X mappings - there's probably a better way to do this
 const alpha = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-// text colours
-const flag = '\x1b[31mF\x1b[0m';
-const green = '\x1b[32m%s\x1b[0m';
 
 class Ui {
     constructor(grid) {
@@ -28,43 +25,36 @@ class Ui {
     // reads the revealMask from the grid object, then overlays user flags onto it
     printGrid() {
         const displayGrid = this.grid.getRevealMask();
-        let line = [];
 
         console.log("\n\nMINESWEEPER\n");
 
-        line.push("    ");
+        process.stdout.write("    ");
 
         // print alphabetical labels along the top
         for (let x in displayGrid[0]) {
-            //process.stdout.write(alpha[x] + "  ");
-            line.push(alpha[x] + "  ");
+            process.stdout.write(alpha[x] + "  ");
         }
 
-        console.log(...line);
-        
         // print rows, and row labels
         for (let y in displayGrid) {
-            line = [];
-
             if (y < 10) {
-                //process.stdout.write("\n " + y);
-                line.push("\n " + y);
+                process.stdout.write("\n " + y);
             } else {
-                //process.stdout.write("\n" + y);
-                line.push("\n" + y);
+                process.stdout.write("\n" + y);
             }
 
             for (let x in displayGrid[y]) {
-                if (this.flagMask[y][x] != "F") {
-                    //process.stdout.write("  " + displayGrid[y][x]);
-                    line.push("  " + displayGrid[y][x]);
+                if (this.flagMask[y][x] == "F") {
+                    process.stdout.write("  F".red);
                 } else {
-                    //process.stdout.write("  F");
-                    line.push("  ", flag);
+
+                    if (displayGrid[y][x] == "*") {
+                        process.stdout.write("  " + displayGrid[y][x]);
+                    } else {
+                        process.stdout.write("  " + String(displayGrid[y][x]).green);
+                    }
                 }
             }
-            
-            console.log(...line);
         }
     }
 
