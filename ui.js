@@ -37,21 +37,25 @@ class Ui {
 
         // print rows, and row labels
         for (let y in displayGrid) {
+            // print row labels with correct spacing
             if (y < 10) {
                 process.stdout.write("\n " + y);
             } else {
                 process.stdout.write("\n" + y);
             }
 
+            // implementing colours based on what's on the tile
+            // red for flags, yellow for numbers greater than 0, green for 0
             for (let x in displayGrid[y]) {
                 if (this.flagMask[y][x] == "F") {
                     process.stdout.write("  F".red);
                 } else {
-
-                    if (displayGrid[y][x] == "*") {
-                        process.stdout.write("  " + displayGrid[y][x]);
+                    if (displayGrid[y][x] == "0") {
+                        process.stdout.write("  0".green);
+                    } else if (displayGrid[y][x] != "*" && displayGrid[y][x] > 0) {
+                        process.stdout.write("  " + String(displayGrid[y][x]).yellow);
                     } else {
-                        process.stdout.write("  " + String(displayGrid[y][x]).green);
+                        process.stdout.write("  " + displayGrid[y][x]);
                     }
                 }
             }
@@ -88,7 +92,9 @@ class Ui {
 
     // takes an input from the user on whether they want to guess a tile or place a flag
     // returns true if the game isn't over, false if the user has tripped a mine
-    // probably a bit dodgy, shouldn't be mixing UI functionality and game logic like this
+    //  probably a bit dodgy, shouldn't be mixing UI functionality and game logic like this
+    //  all the functions from here onwards hook directly into grid and interact with its
+    //  attributes.
     userInput() {
         console.log("\n");
         let input = prompt("Place [F]lag or [*G]uess a tile?").toLowerCase();
@@ -106,9 +112,9 @@ class Ui {
         let coords = input.split(" ");
 
         if (coords.length == 2 
-            && alpha.slice(0, this.grid.xsize).includes(coords[0])
-            && coords[1] >= 0 
-            && coords[1] < this.grid.ysize
+            && alpha.slice(0, this.grid.xsize).includes(coords[0]) // if x coordinate valid
+            && coords[1] >= 0 // if y coordinate larger than 0
+            && coords[1] < this.grid.ysize // if y coordinate smaller than limit
         ) {
             return true;
         } 
@@ -125,10 +131,12 @@ class Ui {
             input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
         }
 
+        // pulls values out of user input
         let coords = input.split(" ");
         let xval = alpha.indexOf(coords[0]);
         let yval = coords[1];
 
+        // runs reveal function in grid
         if (this.grid.reveal(xval, yval) != "gameover") {
             return true;
         } else {
@@ -142,15 +150,18 @@ class Ui {
         let text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
         let input = prompt(text).toUpperCase();
         
+        // validation
         while (!this.validateInput(input)){
             input = prompt(text).toUpperCase();
             console.log("Input not valid. Please try again")
         }
 
+        // pulls values out of user input
         let coords = input.split(" ");
         let xval = alpha.indexOf(coords[0]);
         let yval = coords[1];
 
+        // adds flag to flagMask object
         if (this.flagMask[yval][xval] != "F") {
             this.flagMask[yval][xval] = "F";
         } else {

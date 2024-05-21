@@ -27,11 +27,13 @@ class Game {
 
         this.ui = new UI(this.grid);
         this.gameOver = false;
+        this.elapsed = 0;
     }
 
     // contains all the necessary logic for the whole game
     // initializes grid and ui
-    // returns true if game won, false if lost
+    // returns time elapsed if won, false if lost
+    // this is definitely bad practise but it does make things easier
     play(){
         const start = Date.now();
 
@@ -50,8 +52,8 @@ class Game {
                 this.ui.printFullGrid();
                 console.log("\n\n================  YOU WIN !  ================");
 
-                const elapsed = (Date.now() - start)/1000;
-                console.log("Seconds Elapsed: " + elapsed);
+                this.elapsed = Math.ceil((Date.now() - start)/1000);
+                console.log("Time: " + this.elapsed);
                 
                 this.gameOver = true;
 
@@ -60,6 +62,11 @@ class Game {
         }
 
         return false;
+    }
+
+    // get the time elapsed attribute
+    getTime(){
+        return this.elapsed;
     }
 }
 

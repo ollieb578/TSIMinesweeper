@@ -9,6 +9,7 @@ const prompt = require("prompt-sync")();
 
 // class imports for game
 const Game = require("./game");
+const Leaderboard = require("./leaderboard");
 
 function chooseDifficulty() {
     let userChoice = prompt("Choose difficulty: [*1] Easy, [2] Medium, [3] Hard: ").toLowerCase();
@@ -25,16 +26,21 @@ function chooseDifficulty() {
 
 function main() {
     let wins = 0;
+    let leaderboard = new Leaderboard();
 
     console.log("\n\nWelcome to: \n     M I N E S W E E P E R");
 
     let userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
 
     while (userChoice != "n") {
-        let game = new Game(chooseDifficulty());
+        let difficulty = chooseDifficulty()
+        let game = new Game(difficulty);
 
-        if (game.play()){
+        if (game.play() != false){
             wins += 1;
+
+            leaderboard.newEntry(difficulty, game.getTime())
+            leaderboard.printLeaderboard(difficulty);
         }
 
         userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
