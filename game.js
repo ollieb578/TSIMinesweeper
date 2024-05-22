@@ -36,6 +36,7 @@ class Game {
     // this is definitely bad practise but it does make things easier
     play(){
         const start = Date.now();
+        let turn = 0;
 
         this.grid.populate();
 
@@ -43,9 +44,13 @@ class Game {
             this.ui.printGrid();
 
             if (!this.ui.userInput()){
-                this.ui.printFullGrid();
-                console.log("\n\n================ GAME OVER ! ================");
-                this.gameOver = true;
+                if (turn == 0) {
+                    this.grid.populate();
+                } else {
+                    this.ui.printFullGrid();
+                    console.log("\n\n================ GAME OVER ! ================");
+                    this.gameOver = true;
+                }
             }
 
             if (this.grid.checkWin()){
@@ -59,6 +64,8 @@ class Game {
 
                 return true;
             }
+
+            turn += 1;
         }
 
         return false;

@@ -12,7 +12,7 @@ class Grid {
         this.xsize = xsize;
         this.ysize = ysize;
         this.mines = mines;
-        this.tiles = []; // this is a 2D array, index as [y][x] for positional coordinates.
+        this.tiles; // this is a 2D array, index as [y][x] for positional coordinates.
         this.revealMask = new Array(ysize).fill("*").map(() => new Array(xsize).fill("*")); // this is a 2D array, like tiles. shows which tiles have been revealed, and their values.
     }
 
@@ -28,6 +28,8 @@ class Grid {
     // populates the tiles array with tile objects
     // this includes setting positions of the bombs
     populate() {
+        this.tiles = [];
+
         let mineX;
         let mineY;
         let yArray = [];
