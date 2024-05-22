@@ -28,25 +28,26 @@ function main() {
     let wins = 0;
     let leaderboard = new Leaderboard();
 
-    console.log("\n\nWelcome to: \n     M I N E S W E E P E R");
+    console.log("\nWelcome to: \n     M I N E S W E E P E R\n");
 
     let userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
 
     while (userChoice != "n") {
-        let difficulty = chooseDifficulty()
+        let difficulty = chooseDifficulty();
         let game = new Game(difficulty);
 
         if (game.play() != false){
             wins += 1;
 
-            leaderboard.newEntry(difficulty, game.getTime())
+            leaderboard.newEntry(difficulty, game.getTime());
             leaderboard.printLeaderboard(difficulty);
         }
 
-        userChoice = prompt("\nStart new game? [*Y]es or [N]o: ").toLowerCase();
+        console.log("\n");
+        userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();
     }
     
-    console.log("Exiting...")
+    console.log("Exiting...");
 }
 
 main();
