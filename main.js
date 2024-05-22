@@ -12,7 +12,8 @@ const Game = require("./game");
 const Leaderboard = require("./leaderboard");
 
 function chooseDifficulty() {
-    let userChoice = prompt("Choose difficulty: [*1] Easy, [2] Medium, [3] Hard: ").toLowerCase();
+    console.log("\nChoose difficulty:")
+    let userChoice = prompt("[*1] Easy, [2] Medium, [3] Hard: ").toLowerCase();
 
     switch (userChoice) {
         case "3":

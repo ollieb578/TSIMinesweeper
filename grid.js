@@ -122,6 +122,8 @@ class Grid {
                 }
             }
         }
+        
+        this.turn += 1;
     }
 
     // checks for win condition
