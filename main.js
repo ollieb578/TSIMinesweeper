@@ -41,8 +41,9 @@ function main() {
             wins += 1;
 
             leaderboard.newEntry(difficulty, game.getTime());
-            leaderboard.printLeaderboard(difficulty);
         }
+
+        leaderboard.printLeaderboard(difficulty);
 
         console.log("\n");
         userChoice = prompt("Start new game? [*Y]es or [N]o: ").toLowerCase();

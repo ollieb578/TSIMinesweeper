@@ -85,7 +85,7 @@ class Ui {
                 if(displayGrid[y][x].getType() == "mine") {
                     process.stdout.write("  M".red);
                 } else {
-                    process.stdout.write("  _");
+                    process.stdout.write("  _".green);
                 }
             }
         }
