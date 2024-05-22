@@ -26,8 +26,8 @@ class Leaderboard {
         return(data);
     }
 
-    // print for all leaderboard entries of a given difficulty
-    printLeaderboard(difficulty) {
+    // maps integer representation of difficulty to its text equivalent
+    difficultyMap(difficulty) {
         let textDifficulty;
 
         switch (difficulty) {
@@ -41,6 +41,13 @@ class Leaderboard {
                 textDifficulty = "hard";
                 break;
         }
+
+        return textDifficulty;
+    }
+
+    // print for all leaderboard entries of a given difficulty
+    printLeaderboard(difficulty) {
+        let textDifficulty = this.difficultyMap(difficulty);
 
         const data = this.readLeaderboard().leaderboard;
         const entries = data.filter(function(data) { return data.Difficulty == textDifficulty; })[0].Entries;
@@ -60,19 +67,7 @@ class Leaderboard {
 
     // adds a new entry to the leaderboard.
     newEntry(difficulty, time) {
-        let textDifficulty;
-        
-        switch (difficulty) {
-            case 1:
-                textDifficulty = "easy";
-                break;
-            case 2:
-                textDifficulty = "medium";
-                break;
-            case 3:
-                textDifficulty = "hard";
-                break;
-        }
+        let textDifficulty = this.difficultyMap(difficulty);
 
         const data = this.readLeaderboard();
         const entries = data.leaderboard.filter(function(data) { return data.Difficulty == textDifficulty; })[0].Entries;
