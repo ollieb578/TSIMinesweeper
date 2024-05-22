@@ -141,6 +141,12 @@ class Ui {
 
         // runs reveal function in grid
         if (this.grid.reveal(xval, yval) != "gameover") {
+            // remove flag
+            if (this.flagMask[yval][xval] == "F") {
+                this.flagMask[yval][xval] = "*";
+                this.flagCount += 1;
+            }
+
             return true;
         } else {
             return false;
@@ -171,7 +177,7 @@ class Ui {
                 this.flagMask[yval][xval] = "F";
                 this.flagCount -= 1;
             } else {
-                console.log("Can't flag this!");
+                console.log("\nCan't flag this!".red);
             }
         } else {
             this.flagMask[yval][xval] = "*";
