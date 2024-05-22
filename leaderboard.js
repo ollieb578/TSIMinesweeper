@@ -40,6 +40,9 @@ class Leaderboard {
             case 3:
                 textDifficulty = "hard";
                 break;
+            case 4:
+                textDifficulty = "hard";
+                break;
         }
 
         return textDifficulty;

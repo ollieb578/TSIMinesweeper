@@ -17,7 +17,9 @@ const UI = require("./ui");
 class Game {
     constructor(difficulty) {
         // difficulty picker
-        if (difficulty == 3) {
+        if (difficulty == 4) {
+            this.grid = new Grid(4, 4, 2);
+        } else if (difficulty == 3) {
             this.grid = new Grid(24, 20, 99);
         } else if (difficulty == 2) {
             this.grid = new Grid(18, 14, 40);

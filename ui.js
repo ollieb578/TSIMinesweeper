@@ -52,7 +52,7 @@ class Ui {
                     process.stdout.write("  F".red);
                 } else {
                     if (displayGrid[y][x] == "0") {
-                        process.stdout.write("  0".green);
+                        process.stdout.write("  _".green);
                     } else if (displayGrid[y][x] != "*" && displayGrid[y][x] > 0) {
                         process.stdout.write("  " + String(displayGrid[y][x]).yellow);
                     } else {

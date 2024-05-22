@@ -4,7 +4,7 @@ minesweeper
 
 - win condition - DONE
 
-- flagging - DONEa
+- flagging - DONE
 
 - input validation - DONE
 

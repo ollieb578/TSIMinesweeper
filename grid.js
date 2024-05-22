@@ -65,6 +65,7 @@ class Grid {
     // string - "gameover" if mine guessed
     // RECURSIVE: calls itself iff the current cell hasn't got a value, and there are no 
     //              mines in its radius.
+    //            also, board is recursively regenerated if user fails on first try
     reveal(x, y) {
         let minecount = 0;
         let currentX;
