@@ -150,6 +150,7 @@ class Ui {
     // takes user guesses as input in the form "x00" where "x" is the column label and "00" is the row number
     // returns true
     flagInput() {
+        const displayGrid = this.grid.getRevealMask();
         const text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
         let input = prompt(text).toUpperCase().trim();
         
@@ -166,8 +167,12 @@ class Ui {
 
         // adds flag to flagMask object
         if (this.flagMask[yval][xval] != "F") {
-            this.flagMask[yval][xval] = "F";
-            this.flagCount -= 1;
+            if (displayGrid[yval][xval] == "*") {
+                this.flagMask[yval][xval] = "F";
+                this.flagCount -= 1;
+            } else {
+                console.log("Can't flag this!");
+            }
         } else {
             this.flagMask[yval][xval] = "*";
             this.flagCount += 1;
