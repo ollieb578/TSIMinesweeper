@@ -12,6 +12,7 @@ class Grid {
         this.xsize = xsize;
         this.ysize = ysize;
         this.mines = mines;
+        this.turn = 0;
         this.tiles; // this is a 2D array, index as [y][x] for positional coordinates.
         this.revealMask = new Array(ysize).fill("*").map(() => new Array(xsize).fill("*")); // this is a 2D array, like tiles. shows which tiles have been revealed, and their values.
     }
@@ -70,7 +71,15 @@ class Grid {
         let currentY;
         
         if (this.tiles[y][x].getType() == "mine") {
-            return("gameover");
+            // prevents user from losing on first turn
+            // can potentially recurse forever, possible solution is to transpose mine to fixed position?
+            if (this.turn == 0) {
+                this.populate();
+                this.reveal(x,y);
+                this.turn = 0;
+            } else {
+                return("gameover");
+            }
         } else if (this.revealMask[y][x] == "*") {
             // for all surrounding tiles
             // y modifier
@@ -146,6 +155,11 @@ class Grid {
     // gets xsize attribute
     getXsize() {
         return this.xsize;
+    }
+
+    // gets mines attribute
+    getMines() {
+        return this.mines;
     }
 
     // gets tiles array object

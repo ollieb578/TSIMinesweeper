@@ -19,6 +19,7 @@ class Ui {
     constructor(grid) {
         this.grid = grid;
         this.flagMask = new Array(grid.ysize).fill("*").map(() => new Array(grid.xsize).fill("*"));
+        this.flagCount = grid.getMines();
     }
 
     // prints the current state of the grid
@@ -26,7 +27,7 @@ class Ui {
     printGrid() {
         const displayGrid = this.grid.getRevealMask();
 
-        console.log("\n\nMINESWEEPER\n");
+        console.log("\n\nMINESWEEPER                  " + this.flagCount + " F".red + "\n");
 
         process.stdout.write("    ");
 
@@ -97,7 +98,7 @@ class Ui {
     //  attributes.
     userInput() {
         console.log("\n");
-        let input = prompt("Place [F]lag or [*G]uess a tile?").toLowerCase();
+        let input = prompt("Place [F]lag or [*G]uess a tile?").toLowerCase().trim();
 
         if (input == "f") {
             return(this.flagInput());
@@ -125,10 +126,12 @@ class Ui {
     // takes user guesses as input in the form "x00" where "x" is the column label and "00" is the row number
     // returns true if the game isn't over, false if the user has tripped a mine
     guessInput() {
-        let input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
+        const text = "Enter the tile's coordinates (in the form 'x 3'): ";
+        let input = prompt(text).toUpperCase().trim();
+
         while (!this.validateInput(input)){
             console.log("Input not valid. Please try again");
-            input = prompt("Enter the tile's coordinates (in the form 'x 3'): ").toUpperCase();
+            input = prompt(text).toUpperCase().trim();
         }
 
         // pulls values out of user input
@@ -147,12 +150,12 @@ class Ui {
     // takes user guesses as input in the form "x00" where "x" is the column label and "00" is the row number
     // returns true
     flagInput() {
-        let text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
-        let input = prompt(text).toUpperCase();
+        const text = "Enter the tile's coordinates (in the form 'x 3') to place/remove flag: ";
+        let input = prompt(text).toUpperCase().trim();
         
         // validation
         while (!this.validateInput(input)){
-            input = prompt(text).toUpperCase();
+            input = prompt(text).toUpperCase().trim();
             console.log("Input not valid. Please try again")
         }
 
@@ -164,8 +167,10 @@ class Ui {
         // adds flag to flagMask object
         if (this.flagMask[yval][xval] != "F") {
             this.flagMask[yval][xval] = "F";
+            this.flagCount -= 1;
         } else {
             this.flagMask[yval][xval] = "*";
+            this.flagCount += 1;
         }
         
         return true;

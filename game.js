@@ -44,14 +44,9 @@ class Game {
             this.ui.printGrid();
 
             if (!this.ui.userInput()){
-                // very janky solution to prevent user losing on first turn
-                if (turn == 0) {
-                    this.grid.populate();
-                } else {
-                    this.ui.printFullGrid();
-                    console.log("\n\n================ GAME OVER ! ================");
-                    this.gameOver = true;
-                }
+                this.ui.printFullGrid();
+                console.log("\n\n================ GAME OVER ! ================");
+                this.gameOver = true;
             }
 
             if (this.grid.checkWin()){
